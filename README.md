@@ -1,4 +1,4 @@
-test-role
+ansible-role-bash-prompt
 =========
 
 [![CI](https://github.com/dtoch56/ansible-role-test/workflows/CI/badge.svg?event=push)](https://github.com/dtoch56/ansible-role-bash-prompt/actions?query=workflow%3ACI)
