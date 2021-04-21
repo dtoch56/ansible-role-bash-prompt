@@ -1,0 +1,10 @@
+---
+- name: Collect home directories
+  find:
+    paths: /home
+    file_type: directory
+  register: home_directories
+
+- name: Prepare bash prompt
+  include_tasks: debian.yml
+  when: ansible_os_family == "Debian"
