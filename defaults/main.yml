@@ -1,7 +1,11 @@
 ---
-label: LABEL
-foreground_color: 91
-background_color: 33
+bash_prompt_etc_profile: true
+bash_prompt_etc_bash_bashrc: true
+bash_prompt_etc_bashrc: true
+bash_prompt_bashrc: true
 
-color_prompt: '${debian_chroot:+($debian_chroot)}{{ color_label }}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-noncolor_prompt: '${debian_chroot:+($debian_chroot)}{{ label }}\u@\h:\w\$ '
+bash_prompt_backup: false
+
+bash_prompt_label: " LABEL "
+bash_prompt_foreground_color: 91
+bash_prompt_background_color: 33

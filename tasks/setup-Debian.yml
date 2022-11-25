@@ -1,83 +1,60 @@
 ---
-- name: Test role
-  hosts: 127.0.0.1
-  connection: local
-  gather_facts: false
-
-  vars_files:
-    - ../defaults/main.yml
-    - ../vars/main.yml
-
-  vars:
-    test_file: test.sh
-
-  tasks:
+- name: Set root prompt in /etc/profile
+  when: bash_prompt_etc_profile
+  block:
     - name: Set root prompt in /etc/profile
       ansible.builtin.replace:
-        path: "{{ test_file }}"
-        # PS1='# '
+        path: "/etc/profile"
         regexp: "^      PS1='(.*)# '$"
         replace: "      PS1='{{ bash_prompt_label }}# '"
         backup: "{{ bash_prompt_backup }}"
 
     - name: Set user prompt in /etc/profile
       ansible.builtin.replace:
-        path: "{{ test_file }}"
-        # PS1='$ '
+        path: "/etc/profile"
         regexp: "^      PS1='(.*)[$] '$"
         replace: "      PS1='{{ bash_prompt_label }}$ '"
         backup: "{{ bash_prompt_backup }}"
 
+
+- name: Set prompt in /etc/bash.bashrc
+  when: bash_prompt_etc_bash_bashrc
+  block:
     - name: Set prompt in /etc/bash.bashrc for Debian\Ubuntu
       ansible.builtin.replace:
-        path: "{{ test_file }}"
-        # PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+        path: "/etc/bash.bashrc"
         regexp: '^  PS1=''(.*)\$\{debian_chroot:\+\(\$debian_chroot\)\}\\u@\\h:\\w\\\$ ''$'
         replace: '  PS1=''{{ bash_prompt_label }}${debian_chroot:+($debian_chroot)}\\u@\\h:\\w\\$ '''
         backup: "{{ bash_prompt_backup }}"
 
     - name: Set prompt in /etc/bash.bashrc for Ubuntu 16.04
       ansible.builtin.replace:
-        path: "{{ test_file }}"
-        # PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+        path: "/etc/bash.bashrc"
         regexp: '^PS1=''(.*)\$\{debian_chroot:\+\(\$debian_chroot\)\}\\u@\\h:\\w\\\$ ''$'
         replace: 'PS1=''{{ bash_prompt_label }}${debian_chroot:+($debian_chroot)}\\u@\\h:\\w\\$ '''
         backup: "{{ bash_prompt_backup }}"
 
+
+- name: Set prompt in ~/.bashrc
+  when: bash_prompt_bashrc
+  block:
     - name: Set prompt in /etc/bash.bashrc for color_prompt
       ansible.builtin.replace:
-        path: "{{ test_file }}"
-        # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+        path: "/etc/bash.bashrc"
         regexp: '^    PS1=''(.*)\$\{debian_chroot:\+\(\$debian_chroot\)\}\\\[\\033\[01;32m\\\]\\u@\\h\\\[\\033\[00m\\\]:\\\[\\033\[01;34m\\\]\\w\\\[\\033\[00m\\\]\\\$ ''$'
         replace: '    PS1=''{{ bash_prompt_color_label | regex_replace("\\", "\\\\") }}${debian_chroot:+($debian_chroot)}\\[\\033[01;32m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]\\$ '''
         backup: "{{ bash_prompt_backup }}"
 
     - name: Set prompt in /etc/bash.bashrc for not color_prompt
       ansible.builtin.replace:
-        path: "{{ test_file }}"
-        # PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+        path: "/etc/bash.bashrc"
         regexp: '^    PS1=''(.*)\${debian_chroot:\+\(\$debian_chroot\)}\\u@\\h:\\w\\\$ ''$'
         replace: '    PS1=''{{ bash_prompt_label }}${debian_chroot:+($debian_chroot)}\\u@\\h:\\w\\$ '''
         backup: "{{ bash_prompt_backup }}"
 
     - name: Set prompt in ~/.bashrc for xterm
       ansible.builtin.replace:
-        path: "{{ test_file }}"
-        # PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+        path: "/etc/bash.bashrc"
         regexp: '^    PS1="\\\[\\e\]0;\${debian_chroot:\+\(\$debian_chroot\)}\\u@\\h: \\w\\a\\\]\$PS1"$'
         replace: '    PS1="{{ bash_prompt_label }}\\[\\e]0;${debian_chroot:+($debian_chroot)}\\u@\\h: \\w\\a\\]$PS1"'
-        backup: "{{ bash_prompt_backup }}"
-
-    - name: Set prompt in /etc/bashrc
-      ansible.builtin.replace:
-        path: "{{ test_file }}"
-        regexp: '^    \[ "\$PS1" = "\\\\s-\\\\v\\\\\\\$ " \] && PS1="(.*)\[\\u@\\h \\W\]\\\\\$ "$'
-        replace: '    [ "$PS1" = "\\\\s-\\\\v\\\\\\$ " ] && PS1="{{ bash_prompt_label }}[\\u@\\h \\W]\\\\$ "'
-        backup: "{{ bash_prompt_backup }}"
-
-    - name: Set prompt in /etc/bashrc for CentOS < 8
-      ansible.builtin.replace:
-        path: "{{ test_file }}"
-        regexp: '^  \[ "\$PS1" = "\\\\s-\\\\v\\\\\\\$ " \] && PS1="(.*)\[\\u@\\h \\W\]\\\\\$ "$'
-        replace: '  [ "$PS1" = "\\\\s-\\\\v\\\\\\$ " ] && PS1="{{ bash_prompt_label }}[\\u@\\h \\W]\\\\$ "'
         backup: "{{ bash_prompt_backup }}"

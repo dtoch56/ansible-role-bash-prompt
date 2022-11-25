@@ -1,0 +1,16 @@
+---
+- name: Test role
+  hosts: 127.0.0.1
+  connection: local
+  gather_facts: false
+  become: true
+
+  vars_files:
+    - defaults/main.yml
+    - vars/main.yml
+
+  tasks:
+    - name: Include main task
+      ansible.builtin.include_tasks: tasks/main.yml
+      vars:
+        bash_prompt_backup: true

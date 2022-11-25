@@ -1,0 +1,17 @@
+---
+- name: Set prompt in /etc/bashrc
+  when: bash_prompt_etc_bashrc
+  block:
+    - name: Set prompt in /etc/bashrc
+      ansible.builtin.replace:
+        path: "/etc/bashrc"
+        regexp: '^    \[ "\$PS1" = "\\\\s-\\\\v\\\\\\\$ " \] && PS1="(.*)\[\\u@\\h \\W\]\\\\\$ "$'
+        replace: '    [ "$PS1" = "\\\\s-\\\\v\\\\\\$ " ] && PS1="{{ bash_prompt_label }}[\\u@\\h \\W]\\\\$ "'
+        backup: "{{ bash_prompt_backup }}"
+
+    - name: Set prompt in /etc/bashrc for CentOS < 8
+      ansible.builtin.replace:
+        path: "/etc/bashrc"
+        regexp: '^  \[ "\$PS1" = "\\\\s-\\\\v\\\\\\\$ " \] && PS1="(.*)\[\\u@\\h \\W\]\\\\\$ "$'
+        replace: '  [ "$PS1" = "\\\\s-\\\\v\\\\\\$ " ] && PS1="{{ bash_prompt_label }}[\\u@\\h \\W]\\\\$ "'
+        backup: "{{ bash_prompt_backup }}"

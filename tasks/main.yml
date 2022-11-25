@@ -1,10 +1,14 @@
 ---
 - name: Collect home directories
-  find:
+  ansible.builtin.find:
     paths: /home
     file_type: directory
   register: home_directories
 
 - name: Prepare bash prompt
-  include_tasks: debian.yml
+  ansible.builtin.include_tasks: setup-Debian.yml
   when: ansible_os_family == "Debian"
+
+- name: Prepare bash prompt
+  ansible.builtin.include_tasks: setup-RedHat.yml
+  when: ansible_os_family == "RedHat"
