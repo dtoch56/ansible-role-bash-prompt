@@ -10,7 +10,7 @@ on:
 
 defaults:
   run:
-    working-directory: 'dtoch56.bash_prompt'
+    working-directory: 'dtoch56.ansible-role-bash-prompt'
 
 jobs:
 
@@ -42,17 +42,23 @@ jobs:
     strategy:
       matrix:
         distro:
-          - centos8
           - centos7
+          - centos8
+          - ubuntu1804
           - ubuntu2004
-          - ubuntu2010
+          - ubuntu2204
           - debian10
+          - debian11
+          - fedora35
+          - fedora36
+          - rockylinux9
+          - amazonlinux2
 
     steps:
       - name: Check out the codebase.
         uses: actions/checkout@v2
         with:
-          path: 'dtoch56.bash_prompt'
+          path: 'dtoch56.ansible-role-bash-prompt'
 
       - name: Set up Python 3.
         uses: actions/setup-python@v2
