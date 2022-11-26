@@ -1,7 +1,10 @@
 ansible-role-bash-prompt
 =========
 
-[![CI](https://github.com/dtoch56/ansible-role-test/workflows/CI/badge.svg?event=push)](https://github.com/dtoch56/ansible-role-bash-prompt/actions?query=workflow%3ACI)
+[![CI](https://github.com/dtoch56/ansible-role-bash-prompt/workflows/CI/badge.svg?event=push)](https://github.com/dtoch56/ansible-role-bash-prompt/actions?query=workflow%3ACI)
+[![Release](https://github.com/dtoch56/ansible-role-bash-prompt/workflows/Release/badge.svg?event=push)](https://github.com/dtoch56/ansible-role-bash-prompt/actions?query=workflow%3ARelease)
+[![Role](https://img.shields.io/ansible/role/54434)](https://galaxy.ansible.com/dtoch56/bash_prompt)
+[![Downloads](https://img.shields.io/badge/dynamic/json?color=blueviolet&label=Galaxy%20Downloads&query=%24.download_count&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F54434%2F%3Fformat%3Djson)](https://galaxy.ansible.com/dtoch56/bash_prompt)
 
 Adds [color] label to bash prompt
 
